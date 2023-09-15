@@ -66,7 +66,11 @@ library CounterTable {
   }
 
   /** Get value (using the specified store) */
-  function get(IStore _store, bytes32 _tableId, address owner) internal view returns (uint32 value) {
+  function get(
+    IStore _store,
+    bytes32 _tableId,
+    address owner
+  ) internal view returns (uint32 value) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
@@ -75,7 +79,11 @@ library CounterTable {
   }
 
   /** Set value */
-  function set(bytes32 _tableId, address owner, uint32 value) internal {
+  function set(
+    bytes32 _tableId,
+    address owner,
+    uint32 value
+  ) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
@@ -83,7 +91,12 @@ library CounterTable {
   }
 
   /** Set value (using the specified store) */
-  function set(IStore _store, bytes32 _tableId, address owner, uint32 value) internal {
+  function set(
+    IStore _store,
+    bytes32 _tableId,
+    address owner,
+    uint32 value
+  ) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
@@ -112,7 +125,11 @@ library CounterTable {
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, bytes32 _tableId, address owner) internal {
+  function deleteRecord(
+    IStore _store,
+    bytes32 _tableId,
+    address owner
+  ) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
