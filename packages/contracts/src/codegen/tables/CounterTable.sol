@@ -17,13 +17,11 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("Counter")));
-bytes32 constant CounterTableId = _tableId;
-
-library Counter {
+library CounterTable {
   /** Get the table's key schema */
   function getKeySchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](0);
+    SchemaType[] memory _schema = new SchemaType[](1);
+    _schema[0] = SchemaType.ADDRESS;
 
     return SchemaLib.encode(_schema);
   }
@@ -38,7 +36,8 @@ library Counter {
 
   /** Get the table's key names */
   function getKeyNames() internal pure returns (string[] memory keyNames) {
-    keyNames = new string[](0);
+    keyNames = new string[](1);
+    keyNames[0] = "owner";
   }
 
   /** Get the table's field names */
@@ -48,41 +47,45 @@ library Counter {
   }
 
   /** Register the table's key schema, value schema, key names and value names */
-  function register() internal {
+  function register(bytes32 _tableId) internal {
     StoreSwitch.registerTable(_tableId, getKeySchema(), getValueSchema(), getKeyNames(), getFieldNames());
   }
 
   /** Register the table's key schema, value schema, key names and value names (using the specified store) */
-  function register(IStore _store) internal {
+  function register(IStore _store, bytes32 _tableId) internal {
     _store.registerTable(_tableId, getKeySchema(), getValueSchema(), getKeyNames(), getFieldNames());
   }
 
   /** Get value */
-  function get() internal view returns (uint32 value) {
-    bytes32[] memory _keyTuple = new bytes32[](0);
+  function get(bytes32 _tableId, address owner) internal view returns (uint32 value) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0, getValueSchema());
     return (uint32(Bytes.slice4(_blob, 0)));
   }
 
   /** Get value (using the specified store) */
-  function get(IStore _store) internal view returns (uint32 value) {
-    bytes32[] memory _keyTuple = new bytes32[](0);
+  function get(IStore _store, bytes32 _tableId, address owner) internal view returns (uint32 value) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0, getValueSchema());
     return (uint32(Bytes.slice4(_blob, 0)));
   }
 
   /** Set value */
-  function set(uint32 value) internal {
-    bytes32[] memory _keyTuple = new bytes32[](0);
+  function set(bytes32 _tableId, address owner, uint32 value) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)), getValueSchema());
   }
 
   /** Set value (using the specified store) */
-  function set(IStore _store, uint32 value) internal {
-    bytes32[] memory _keyTuple = new bytes32[](0);
+  function set(IStore _store, bytes32 _tableId, address owner, uint32 value) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)), getValueSchema());
   }
@@ -93,22 +96,25 @@ library Counter {
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple() internal pure returns (bytes32[] memory) {
-    bytes32[] memory _keyTuple = new bytes32[](0);
+  function encodeKeyTuple(address owner) internal pure returns (bytes32[] memory) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
     return _keyTuple;
   }
 
   /* Delete all data for given keys */
-  function deleteRecord() internal {
-    bytes32[] memory _keyTuple = new bytes32[](0);
+  function deleteRecord(bytes32 _tableId, address owner) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple, getValueSchema());
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store) internal {
-    bytes32[] memory _keyTuple = new bytes32[](0);
+  function deleteRecord(IStore _store, bytes32 _tableId, address owner) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256(uint160(owner)));
 
     _store.deleteRecord(_tableId, _keyTuple, getValueSchema());
   }

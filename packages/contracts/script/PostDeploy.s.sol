@@ -4,6 +4,10 @@ pragma solidity >=0.8.0;
 import { Script } from "forge-std/Script.sol";
 import { console } from "forge-std/console.sol";
 import { IWorld } from "../src/codegen/world/IWorld.sol";
+import {IncrementRegistration} from "../src/IncrementRegistration.sol";
+
+import { IBaseWorld } from "@latticexyz/world/src/interfaces/IBaseWorld.sol";
+import { TestScript } from "../src/TestScript.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
@@ -12,12 +16,13 @@ contract PostDeploy is Script {
 
     // Start broadcasting transactions from the deployer account
     vm.startBroadcast(deployerPrivateKey);
-
+    TestScript.run(worldAddress);
     // ------------------ EXAMPLES ------------------
+    
 
     // Call increment on the world via the registered function selector
-    uint32 newValue = IWorld(worldAddress).increment();
-    console.log("Increment via IWorld:", newValue);
+    // uint32 newValue = IWorld(worldAddress).increment();
+    // console.log("Increment via IWorld:", newValue);
 
     vm.stopBroadcast();
   }

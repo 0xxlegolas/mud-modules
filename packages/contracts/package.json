@@ -17,10 +17,10 @@
     "test": "tsc --noEmit && mud test"
   },
   "dependencies": {
-    "@latticexyz/cli": "2.0.0-next.7",
-    "@latticexyz/schema-type": "2.0.0-next.7",
-    "@latticexyz/store": "2.0.0-next.7",
-    "@latticexyz/world": "2.0.0-next.7"
+    "@latticexyz/cli": "2.0.0-next.8",
+    "@latticexyz/schema-type": "2.0.0-next.8",
+    "@latticexyz/store": "2.0.0-next.8",
+    "@latticexyz/world": "2.0.0-next.8"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
