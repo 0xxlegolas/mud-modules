@@ -8,4 +8,11 @@ export default mudConfig({
       tableIdArgument: true,
     },
   },
+  modules: [
+    {
+      name: "IncrementModule",
+      root: true,
+      args: []
+    }
+  ]
 });
