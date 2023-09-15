@@ -10,7 +10,10 @@ export default mudConfig({
     {
       name: "IncrementModule",
       root: false,
-      args: []
+      args: [{
+        value: "0x",
+        type: "string"
+      }]
     }
   ]
 });
