@@ -6,7 +6,7 @@ import { Module } from "@latticexyz/world/src/Module.sol";
 import { WorldContextConsumer } from "@latticexyz/world/src/WorldContext.sol";
 import { ResourceSelector } from "@latticexyz/world/src/ResourceSelector.sol";
 
-import { IncrementSystem } from "./systems/IncrementSystem.sol";
+import { IncrementSystem } from "./IncrementSystem.sol";
 import { CounterTable } from "./codegen/tables/CounterTable.sol";
 import { NAMESPACE, TABLE_NAME, SYSTEM_NAME } from "./constants.sol";
 

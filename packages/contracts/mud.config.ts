@@ -2,16 +2,14 @@ import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
   tables: {
-    CounterTable: {
-      keySchema: { owner: "address" },
-      schema: "uint32",
-      tableIdArgument: true,
-    },
+
   },
+  excludeSystems: ["IncrementSystem",],
+
   modules: [
     {
       name: "IncrementModule",
-      root: true,
+      root: false,
       args: []
     }
   ]
