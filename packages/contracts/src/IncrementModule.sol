@@ -28,8 +28,10 @@ contract IncrementModule is Module {
   function install(bytes memory) public {
     IBaseWorld world = IBaseWorld(_world());
 
+    world.registerNamespace(NAMESPACE);
+
     //Register a table
-    // world.grantAccess(ResourceSelector.from(NAMESPACE, TABLE_NAME), address(incrementSystem));
+    world.grantAccess(ResourceSelector.from(NAMESPACE, TABLE_NAME), address(incrementSystem));
     CounterTable.register(world, ResourceSelector.from(NAMESPACE, TABLE_NAME));
 
     // Register system
